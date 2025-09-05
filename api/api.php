@@ -10,7 +10,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Incluir la conexión
-require_once __DIR__ . "/config/conexion.php";
+require_once __DIR__ . "../conexion.php";
 
 
 
