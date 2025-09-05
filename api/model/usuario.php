@@ -9,7 +9,7 @@ class usuario {
          $this->pdo = connection();
     }
 
-  public function login($username, $password) {
+    public function login($username, $password) {
         $sql = "SELECT id, nombre, email, password FROM usuarios WHERE email = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(1, $username);

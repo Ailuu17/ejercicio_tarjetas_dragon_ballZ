@@ -1,5 +1,3 @@
-// filepath: c:\xampp\htdocs\ejercicio_tarjetas_dragon_ballZ\api\controller\tarjetas.php
-
 <?php
 session_start();
 require_once __DIR__ . '../model/Tarjeta.php';

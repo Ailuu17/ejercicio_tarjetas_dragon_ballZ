@@ -3,19 +3,6 @@
 // API reorganizada para manejo de usuarios y tarjetas
 
 
-
-
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-// Incluir la conexión
-require_once __DIR__ . "../conexion.php";
-
-
-
-
-
 // Establecer cabeceras para API
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -48,17 +35,6 @@ try {
             
             case 'logout':
                //Cerrar sesión
-                
-           
-
-	                    logout();
-							break;
-
-						case 'verificar':
-							verificarSesion();
-							break;
-
-
 
                 
             default:
@@ -162,20 +138,6 @@ try {
 
 
 //Agregue yo
-
-
-
-<?php
-
-require_once '../controller/auth.php';
-
-$app->group('/auth', function (RouteCollectorProxy $group) {
-    $group->post('/login', function (ServerRequestInterface $request, ResponseInterface $response) {
-        return procesarLogin($request, $response);
-    });
-});
-?>
-
 
 
 <?php
