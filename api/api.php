@@ -2,8 +2,19 @@
 // 🐉 DRAGON BALL Z - API PRINCIPAL SIMPLE 🐉
 // API reorganizada para manejo de usuarios y tarjetas
 
+
+
+
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // Incluir la conexión
-require_once __DIR__ . "/../conexion.php";
+require_once __DIR__ . "/config/conexion.php";
+
+
+
+
 
 // Establecer cabeceras para API
 header('Content-Type: application/json');
@@ -28,7 +39,7 @@ try {
                 if ($requestMethod === "POST") {
                     $username = $_POST['username'] ?? '';
                     $password = $_POST['password'] ?? '';
-                    Login($username, $password);//funcion del controller
+                    login($username, $password); //funcion del controller
                 } else {
                     echo json_encode(["success" => false, "error" => "Método no permitido para login"]);
                 }
@@ -39,6 +50,16 @@ try {
                //Cerrar sesión
                 
            
+
+	                    logout();
+							break;
+
+						case 'verificar':
+							verificarSesion();
+							break;
+
+
+
                 
             default:
                 echo json_encode(["success" => false, "error" => "Acción de usuarios no válida"]);
@@ -135,3 +156,46 @@ try {
     ]);
 }
 ?>
+
+
+
+
+
+//Agregue yo
+
+
+
+<?php
+
+require_once '../controller/auth.php';
+
+$app->group('/auth', function (RouteCollectorProxy $group) {
+    $group->post('/login', function (ServerRequestInterface $request, ResponseInterface $response) {
+        return procesarLogin($request, $response);
+    });
+});
+?>
+
+
+
+<?php
+
+
+require_once '../controller/tarjetas.php';
+
+$app->group('/tarjetas', function (RouteCollectorProxy $group) {
+    $group->get('', function (ServerRequestInterface $request, ResponseInterface $response) {
+        session_start();
+        if (!isset($_SESSION['usuario_id'])) {
+            return $response->withStatus(401)->write('Unauthorized');
+        }
+
+        $usuario_id = $_SESSION['usuario_id'];
+        $tarjetas = obtenerMisTarjetas($usuario_id);
+        return $response->withJson($tarjetas);
+    });
+});
+?>
+
+
+
